@@ -20,12 +20,6 @@ const ElementTruncator = ({
   const isTruncated = !isHidden && entry.intersectionRatio < TRUNCATE_LOWER_THAN
   const isFullyVisible = !isHidden && !isTruncated
 
-  let bgClass = ''
-  const shouldTextTruncate = children.props?.className.includes('can-truncate')
-  if (shouldTextTruncate) {
-    bgClass = children.props?.className.match(/(bg.+00)/gi)?.[0]
-  }
-
   React.useEffect(() => {
     setChildFullyVisibleStates(prevStates =>
       prevStates.map((state, i) => (i === childIndex ? isFullyVisible : state))
@@ -37,23 +31,10 @@ const ElementTruncator = ({
       {...{
         className: `relative overflow-hidden h-full z-10 shrink-0 ${
           isHidden ? 'opacity-0' : 'opacity-100'
-        } ${bgClass}`
+        }`
       }}
     >
-      <span
-        {...{
-          className: `absolute z-10 left-0 top-0 truncate max-w-full`
-        }}
-      >
-        {shouldTextTruncate && isTruncated && (
-          <span
-            {...{
-              className: `px-1 text-black fixed align-middle right-0 z-20 ${bgClass}`
-            }}
-          >
-            ...
-          </span>
-        )}
+      <span {...{ className: `absolute z-10 left-0 top-0 truncate max-w-full` }}>
         {children}
       </span>
       <span

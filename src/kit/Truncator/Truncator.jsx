@@ -4,35 +4,20 @@ import ErrorBoundary from 'kit/ErrorBoundary'
 import ElementTruncator from './ElementTruncator'
 
 const Truncator = ({ rootIndex, children }) => {
-  if (
-    React.Children.map(
-      children,
-      (child, i) => !child.props?.className.includes('can-truncate')
-    ).every(Boolean)
-  ) {
-    throw new Error('No children can be truncated')
-  }
-
-  if (
-    React.Children.map(children, (child, i) => {
-      const cls = child.props?.className
-
-      return cls.includes('can-truncate') && !cls.includes('bg-')
-    }).some(Boolean)
-  ) {
-    throw new Error('All elements with "can-truncate" class must have a bg-* class')
-  }
-
   const rootRef = React.useRef(null)
   const [childFullyVisibleStates, setChildFullyVisibleStates] = React.useState(
     Array.from({ length: React.Children.count(children) }, () => false)
   )
 
+  const somethingIsTruncated = !childFullyVisibleStates.every(Boolean)
+
   return (
     <Tippy
       {...{
-        disabled: childFullyVisibleStates.every(Boolean),
-        content: children,
+        disabled: !somethingIsTruncated,
+        content: (
+          <div {...{ className: '[&>*]:inline-block [&>*]:align-top' }}>{children}</div>
+        ),
         placement: 'bottom',
         maxWidth: 400,
         trigger: 'mouseenter focus',
@@ -48,8 +33,9 @@ const Truncator = ({ rootIndex, children }) => {
       <div
         {...{
           ref: rootRef,
-          className:
-            'flex items-center whitespace-nowrap contain-content bg-green-500 overflow-hidden'
+          className: `flex items-center whitespace-nowrap contain-content border-4 ${
+            somethingIsTruncated ? 'border-red-800' : 'border-green-800'
+          } overflow-hidden`
         }}
       >
         {React.Children.map(children, (child, i) => (
