@@ -1,0 +1,65 @@
+.popover-default {
+  @apply bg-white rounded shadow-lg text-left border border-solid border-gray-300 popover-tip p-2 max-h-[88vh] overflow-x-hidden  overflow-y-auto;
+}
+
+.popconfirm-default{
+  @apply bg-white rounded shadow-lg text-left border border-solid border-gray-200 popover-tip;
+}
+
+.tippy-arrow,
+.tippy-arrow::before {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: inherit;
+}
+
+.tippy-arrow {
+  visibility: hidden;
+}
+
+.tippy-arrow::before {
+  visibility: visible;
+  content: '';
+  transform: rotate(45deg);
+}
+
+.popover-tip[data-placement^='top'] > .tippy-arrow,
+.tooltip-tip[data-placement^='top'] > .tippy-arrow {
+  bottom: -4px;
+}
+
+.popover-tip[data-placement^='bottom'] > .tippy-arrow,
+.tooltip-tip[data-placement^='bottom'] > .tippy-arrow {
+  top: -4px;
+}
+
+.popover-tip[data-placement^='left'] > .tippy-arrow,
+.tooltip-tip[data-placement^='left'] > .tippy-arrow {
+  right: -4px;
+}
+
+.popover-tip[data-placement^='right'] > .tippy-arrow,
+.tooltip-tip[data-placement^='right'] > .tippy-arrow {
+  left: -4px;
+}
+
+.popover-tip[data-placement^='left'] > .tippy-arrow::before {
+  border-top: 1px solid rgb(209, 213, 219);
+  border-right: 1px solid rgb(209, 213, 219);
+}
+
+.popover-tip[data-placement^='top'] > .tippy-arrow::before {
+  border-right: 1px solid rgb(209, 213, 219);
+  border-bottom: 1px solid rgb(209, 213, 219);
+}
+
+.popover-tip[data-placement^='bottom'] > .tippy-arrow::before {
+  border-left: 1px solid rgb(209, 213, 219);
+  border-top: 1px solid rgb(209, 213, 219);
+}
+
+.popover-tip[data-placement^='right'] > .tippy-arrow::before {
+  border-left: 1px solid rgb(209, 213, 219);
+  border-bottom: 1px solid rgb(209, 213, 219);
+}
